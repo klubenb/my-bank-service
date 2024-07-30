@@ -1,4 +1,4 @@
-package ru.skillfactory.mybankservice.api.dto;
+package ru.skillfactory.mybankservice.api.dto.account;
 
 import lombok.Builder;
 import lombok.NonNull;
