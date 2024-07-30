@@ -3,9 +3,11 @@ package ru.skillfactory.mybankservice.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.skillfactory.mybankservice.api.dto.UpdateBalanceDto;
 import ru.skillfactory.mybankservice.persistence.entity.Account;
 import ru.skillfactory.mybankservice.persistence.repository.AccountRepository;
 
+import java.math.BigDecimal;
 import java.util.UUID;
 
 @Service
@@ -15,37 +17,39 @@ public class AccountService {
     private final AccountRepository repository;
 
     @Transactional
-    public UUID createAccount(Account account) {
-        return repository.save(account).getId();
+    public Account createAccount(Account account) {
+        if (account.getBalance().compareTo(BigDecimal.ZERO) < 0) {
+            throw new IllegalArgumentException("Невозможно создать счет с отрицательным балансом");
+        }
+        return repository.save(account);
     }
 
     @Transactional(readOnly = true)
-    public Double getBalance(UUID accountId) {
-        return repository.findById(accountId).getBalance();
+    public Account getBalance(UUID accountId) {
+        return repository.findById(accountId);
     }
 
     @Transactional
-    public Double takeMoney(UUID accountId, Double amount) {
-
-        var account = repository.findById(accountId);
-        if (account.getBalance() >= amount) {
-            account.setBalance(account.getBalance() - amount);
+    public BigDecimal takeMoney(UpdateBalanceDto dto) {
+        var account = repository.findById(dto.id());
+        if (account.getBalance().compareTo(dto.amount()) >= 0) {
+            account.setBalance(account.getBalance().subtract(dto.amount()));
             repository.save(account);
-            return account.getBalance();
+            return dto.amount();
         } else {
-            throw new ArithmeticException("You do not have enough money to take money");
+            throw new IllegalArgumentException("Недостаточно средств на счете");
         }
     }
 
     @Transactional
-    public Double putMoney(UUID accountId, double amount) {
-        var account = repository.findById(accountId);
-        if (amount >= 0) {
-            account.setBalance(account.getBalance() + amount);
+    public BigDecimal putMoney(UpdateBalanceDto dto) {
+        var account = repository.findById(dto.id());
+        if (dto.amount().compareTo(BigDecimal.ZERO) > 0) {
+            account.setBalance(account.getBalance().add(dto.amount()));
             repository.save(account);
             return account.getBalance();
         } else {
-            throw new ArithmeticException("You do not have enough money to put money");
+            throw new IllegalArgumentException("Невозможно положить отрицательную сумму на счет");
         }
     }
 }
