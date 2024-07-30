@@ -2,6 +2,7 @@ package ru.skillfactory.mybankservice.api.dto;
 
 import lombok.Builder;
 import lombok.NonNull;
+import org.apache.commons.lang3.StringUtils;
 
 @Builder
 public class BaseResponseDto<Data> {
@@ -21,7 +22,7 @@ public class BaseResponseDto<Data> {
     }
 
     public static BaseResponseDto asFailure(@NonNull String message) {
-        if (message == null) {
+        if (StringUtils.isBlank(message)) {
             throw new NullPointerException("message is marked non-null but is null");
         } else {
             return builder()
