@@ -1,0 +1,19 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5433/skillfactory?currentSchema=bank
+    username:
+    password:
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+
+
+  flyway:
+    user:
+    password:
+    url: jdbc:postgresql://localhost:5433/skillfactory
+    default-schema: bank
+
+server:
+  port: 8082
