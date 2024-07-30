@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS account
     gen_random_uuid
 (
 ) PRIMARY KEY,
-    balance INTEGER NOT NULL DEFAULT 0.0
+    balance MONEY DEFAULT 0.0 NOT NULL
     );
 
 COMMENT
