@@ -32,24 +32,22 @@ public class AccountService {
     }
 
     @Transactional
-    public BigDecimal takeMoney(UpdateBalanceDto dto) {
+    public Account takeMoney(UpdateBalanceDto dto) {
         var account = findById(dto.id());
         if (account.getBalance().compareTo(dto.amount()) >= 0) {
             account.setBalance(account.getBalance().subtract(dto.amount()));
-            repository.save(account);
-            return dto.amount();
+            return repository.save(account);
         } else {
             throw new IllegalArgumentException("Недостаточно средств на счете");
         }
     }
 
     @Transactional
-    public BigDecimal putMoney(UpdateBalanceDto dto) {
+    public Account putMoney(UpdateBalanceDto dto) {
         var account = findById(dto.id());
         if (dto.amount().compareTo(BigDecimal.ZERO) > 0) {
             account.setBalance(account.getBalance().add(dto.amount()));
-            repository.save(account);
-            return account.getBalance();
+            return repository.save(account);
         } else {
             throw new IllegalArgumentException("Невозможно положить отрицательную сумму на счет");
         }
