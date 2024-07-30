@@ -3,7 +3,8 @@ package ru.skillfactory.mybankservice.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.skillfactory.mybankservice.api.dto.UpdateBalanceDto;
+import ru.skillfactory.mybankservice.api.dto.account.UpdateBalanceDto;
+import ru.skillfactory.mybankservice.exceptions.RecordNotFoundException;
 import ru.skillfactory.mybankservice.persistence.entity.Account;
 import ru.skillfactory.mybankservice.persistence.repository.AccountRepository;
 
@@ -25,13 +26,14 @@ public class AccountService {
     }
 
     @Transactional(readOnly = true)
-    public Account getBalance(UUID accountId) {
-        return repository.findById(accountId);
+    public Account findById(UUID accountId) {
+        return repository.findById(accountId)
+                .orElseThrow(() -> new RecordNotFoundException("Не найден счет с id: " + accountId));
     }
 
     @Transactional
     public BigDecimal takeMoney(UpdateBalanceDto dto) {
-        var account = repository.findById(dto.id());
+        var account = findById(dto.id());
         if (account.getBalance().compareTo(dto.amount()) >= 0) {
             account.setBalance(account.getBalance().subtract(dto.amount()));
             repository.save(account);
@@ -43,7 +45,7 @@ public class AccountService {
 
     @Transactional
     public BigDecimal putMoney(UpdateBalanceDto dto) {
-        var account = repository.findById(dto.id());
+        var account = findById(dto.id());
         if (dto.amount().compareTo(BigDecimal.ZERO) > 0) {
             account.setBalance(account.getBalance().add(dto.amount()));
             repository.save(account);
