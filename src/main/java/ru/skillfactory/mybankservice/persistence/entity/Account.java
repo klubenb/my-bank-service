@@ -2,25 +2,28 @@ package ru.skillfactory.mybankservice.persistence.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
+import java.math.BigDecimal;
 import java.util.UUID;
 
-@NoArgsConstructor
 @AllArgsConstructor
-@Data
+@RequiredArgsConstructor
 @Entity
+@Data
 @Table(name = "account")
 public class Account {
-
     @Id
-    @Column(name = "id", updatable = false)
+    @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(name = "id", nullable = false)
     private UUID id;
 
     @Column(name = "balance", nullable = false)
-    private Double balance;
+    private BigDecimal balance;
 }
