@@ -1,3 +1,18 @@
 spring:
   application:
     name: my-bank-service
+  datasource:
+    url: jdbc:postgresql://localhost:5433/skillfactory?currentSchema=bank
+    username: user
+    password: password
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+
+
+  flyway:
+    user: user
+    password: password
+    url: jdbc:postgresql://localhost:5433/skillfactory
+    default-schema: bank
