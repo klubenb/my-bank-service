@@ -11,7 +11,9 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
+import lombok.Builder;
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
 import ru.skillfactory.mybankservice.persistence.entity.enumeration.OperationType;
 
 import java.math.BigDecimal;
@@ -21,6 +23,8 @@ import java.util.UUID;
 
 @Data
 @Entity
+@Builder
+@RequiredArgsConstructor
 @Table(name = "operation_history")
 public class OperationHistory {
 
