@@ -1,8 +1,8 @@
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5433/skillfactory?currentSchema=bank
-    username:
-    password:
+    username: postgres
+    password: postgres
   jpa:
     hibernate:
       ddl-auto: none
@@ -10,8 +10,8 @@ spring:
 
 
   flyway:
-    user:
-    password:
+    user: postgres
+    password: postgres
     url: jdbc:postgresql://localhost:5433/skillfactory
     default-schema: bank
 

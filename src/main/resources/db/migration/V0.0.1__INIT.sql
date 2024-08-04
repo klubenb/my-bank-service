@@ -1,7 +1,7 @@
 -- ********************* account *********************
 CREATE TABLE IF NOT EXISTS account
 (   id          UUID        DEFAULT gen_random_uuid() PRIMARY KEY,
-    balance     MONEY       DEFAULT 0.0 NOT NULL
+    balance     NUMERIC       DEFAULT 0.0 NOT NULL
     );
 
 COMMENT ON TABLE account IS 'Таблица счетов';

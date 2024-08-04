@@ -7,7 +7,5 @@ import ru.skillfactory.mybankservice.persistence.entity.Account;
 import java.util.UUID;
 
 @Repository
-public interface AccountRepository extends JpaRepository<Account, String> {
-
-    Account findById(UUID id);
+public interface AccountRepository extends JpaRepository<Account, UUID> {
 }
