@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.skillfactory.mybankservice.api.dto.account.BaseResponseDto;
 import ru.skillfactory.mybankservice.api.dto.account.CreateAccountDto;
+import ru.skillfactory.mybankservice.api.dto.account.TransferMoneyRequestDto;
 import ru.skillfactory.mybankservice.api.dto.account.UpdateBalanceDto;
 import ru.skillfactory.mybankservice.mapper.AccountMapper;
 import ru.skillfactory.mybankservice.service.AccountService;
@@ -56,5 +57,12 @@ public class AccountController {
     @Operation(summary = "Положить деньги")
     public BaseResponseDto<UUID> putMoney(@RequestBody UpdateBalanceDto dto) {
         return BaseResponseDto.asSuccess(accountUpdateService.putMoney(dto).getId());
+    }
+
+    @PostMapping("/transfer-money")
+    @ApiResponse(description = "Успешно", responseCode = "200")
+    @Operation(summary = "Положить деньги")
+    public BaseResponseDto<UUID> transferMoney(@RequestBody TransferMoneyRequestDto dto) {
+        return BaseResponseDto.asSuccess(accountUpdateService.transferMoney(dto).getId());
     }
 }
