@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ru.skillfactory.mybankservice.api.dto.account.BaseResponseDto;
+import ru.skillfactory.mybankservice.api.dto.BaseResponseDto;
 import ru.skillfactory.mybankservice.api.dto.operation.OperationHistoryRequestDto;
 import ru.skillfactory.mybankservice.api.dto.operation.OperationHistoryResponseDto;
 import ru.skillfactory.mybankservice.mapper.OperationHistoryMapper;
