@@ -15,7 +15,7 @@ public record OperationHistoryResponseDto(
         UUID accountId,
 
         @Schema(description = "Тип операции")
-        OperationType operationType,
+        OperationType type,
 
         @Schema(description = "Измененная сумма")
         BigDecimal amount,

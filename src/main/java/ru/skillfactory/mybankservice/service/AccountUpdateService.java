@@ -21,7 +21,7 @@ public class AccountUpdateService {
 
         var operation = OperationHistory.builder()
                 .account(account)
-                .ammount(account.getBalance())
+                .amount(account.getBalance())
                 .type(OperationType.TAKE_MONEY)
                 .build();
         operationService.create(operation);
@@ -34,7 +34,7 @@ public class AccountUpdateService {
 
         var operation = OperationHistory.builder()
                 .account(account)
-                .ammount(account.getBalance())
+                .amount(account.getBalance())
                 .type(OperationType.PUT_MONEY)
                 .build();
         operationService.create(operation);
