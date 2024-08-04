@@ -17,7 +17,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import ru.skillfactory.mybankservice.persistence.entity.enumeration.OperationType;
+import ru.skillfactory.mybankservice.persistence.enumeration.OperationType;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -39,7 +39,12 @@ public class OperationHistory {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "account_id")
+    @NotNull
     private Account account;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "transfer_from_account_id")
+    private Account transferFromAccountId;
 
     @NotNull
     @Column(name = "type", nullable = false)
@@ -47,8 +52,12 @@ public class OperationHistory {
     private OperationType type;
 
     @NotNull
-    @Column(name = "amount", nullable = false)
-    private BigDecimal amount;
+    @Column(name = "old_amount", nullable = false)
+    private BigDecimal oldAmount;
+
+    @NotNull
+    @Column(name = "new_amount", nullable = false)
+    private BigDecimal newAmount;
 
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
