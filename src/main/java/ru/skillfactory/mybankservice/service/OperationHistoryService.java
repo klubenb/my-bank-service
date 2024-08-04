@@ -10,6 +10,7 @@ import ru.skillfactory.mybankservice.persistence.repository.OperationHistoryRepo
 import java.util.List;
 
 import static org.springframework.data.jpa.domain.Specification.where;
+import static ru.skillfactory.mybankservice.persistence.specification.OperationHistorySpecification.accountIdEquals;
 import static ru.skillfactory.mybankservice.persistence.specification.OperationHistorySpecification.createdAtBetween;
 
 @Service
@@ -20,8 +21,9 @@ public class OperationHistoryService {
 
     @Transactional(readOnly = true)
     public List<OperationHistory> findAll(OperationHistoryRequestDto dto) {
-        var spec = where(createdAtBetween(dto.dateFrom(), dto.dateTo()));
-        return repository.findAllByAccountId(dto.accountId(), spec);
+        var spec = where(accountIdEquals(dto.accountId()))
+                .and(createdAtBetween(dto.dateFrom(), dto.dateTo()));
+        return repository.findAll(spec);
     }
 
     @Transactional
