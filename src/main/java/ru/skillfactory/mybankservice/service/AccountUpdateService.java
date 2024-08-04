@@ -24,7 +24,7 @@ public class AccountUpdateService {
                 .amount(account.getBalance())
                 .type(OperationType.TAKE_MONEY)
                 .build();
-        operationService.create(operation);
+        operationService.save(operation);
         return account;
     }
 
@@ -37,7 +37,7 @@ public class AccountUpdateService {
                 .amount(account.getBalance())
                 .type(OperationType.PUT_MONEY)
                 .build();
-        operationService.create(operation);
+        operationService.save(operation);
         return account;
     }
 }
